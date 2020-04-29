@@ -1,0 +1,3 @@
+public interface AddressValidator {
+    public boolean isValidAddress(String caddress, String czipcode, String cprovince);
+}// end of class
