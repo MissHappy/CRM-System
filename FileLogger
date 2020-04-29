@@ -1,0 +1,46 @@
+import java.util.List;
+
+public class FileLogger implements Logger {
+
+
+
+   final String customer_file="customer.txt";
+
+        public void save(Customer ct) {
+
+
+            FileUtil futil = new FileUtil();
+          String dataLine = ct.getName()+","+ct.getPhone()+","+ ct.getEmail()+
+                     "," + ct.getAddress() + ","+ ct.getAddressType() + "," +ct.getZipCode()+","
+                    +ct.getProvince()+","+ct.getCustomerType();
+         futil.writeToFile(customer_file, dataLine);
+        }
+
+
+    public Customer search(String name) {
+        Customer ct=new Customer();
+        return ct;
+    }
+
+    public void update(Customer ct) {
+
+    }
+    public void delete(String name){
+
+
+
+    }
+
+    public List<Customer> searchad(){
+
+        return null;
+    }
+
+
+
+
+
+}
+
+
+
