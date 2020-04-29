@@ -1,0 +1,388 @@
+import com.sun.source.tree.CaseTree;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.FileNotFoundException;
+
+public class CreateProfile extends JFrame {
+    public static final String newline = "\n";
+    public static final String VALIDATE_SAVE = "Validate & Save";
+    public static final String EXIT = "Exit";
+
+    private JTextField txtName;
+    private JTextField txtPhone,txtEmail;
+    private JTextField txtAddress, txtZipCode, txtProvince;
+
+    private JComboBox cmbAddressType;
+    private JComboBox cmbCustomerType;
+
+    private JPanel cpanel;
+
+    private JButton validatesaveButton;
+
+    private JLabel lblAddressType;
+    private JLabel lblCustomerType;
+    private JLabel lblName;
+    private JLabel lblPhone,lblEmail;
+    private JLabel lblAddress, lblZipCode, lblProvince;
+    private JLabel lblResult, lblResultValue;
+
+
+    public CreateProfile (){
+        super(" Bank Customer management System ");
+
+        txtName = new JTextField(20);
+        txtPhone = new JTextField(20);
+        txtEmail= new JTextField(20);
+        txtAddress = new JTextField(20);
+        txtZipCode = new JTextField(20);
+        txtProvince = new JTextField(20);
+
+        cmbAddressType = new JComboBox();
+        cmbAddressType.addItem(Customer.AO);
+
+        cmbCustomerType = new JComboBox();
+        cmbCustomerType .addItem(Customer.LO);
+        cmbCustomerType .addItem(Customer.PO);
+        cmbCustomerType .addItem(Customer.NW);
+        cmbCustomerType .addItem(Customer.IM);
+
+
+
+
+        lblName = new JLabel("Name ");
+        lblName.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblName.setForeground(new Color(255, 255, 255));
+        lblPhone = new JLabel("Phone ");
+
+        lblPhone.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblPhone.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblEmail = new JLabel("Email ");
+        lblEmail.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblAddress = new JLabel("Address ");
+        lblAddress.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblAddress.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblAddressType = new JLabel("  Address Type:");
+        lblAddressType.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblAddressType.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblZipCode = new JLabel("ZipCode ");
+        lblZipCode.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblZipCode.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblProvince = new JLabel("Province ");
+        lblProvince.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblProvince.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblCustomerType = new JLabel("Type of Customer ");
+        lblCustomerType.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblCustomerType.setForeground(new java.awt.Color(255, 255, 255));
+
+
+
+
+
+        lblResult = new JLabel("Result:");
+        lblResult.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblResult.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblResultValue = new JLabel(" Please click on Validate & Save Button");
+        lblResultValue.setFont(new java.awt.Font("Mongolian Baiti", 1, 22)); // NOI18N
+        lblResultValue.setForeground(new java.awt.Color(255, 255, 255));
+
+
+
+
+
+        //Create the open button
+        validatesaveButton = new JButton(CreateProfile.VALIDATE_SAVE);
+        validatesaveButton.setMnemonic(KeyEvent.VK_V);
+
+
+
+        ButtonHandler objButtonHandler = new ButtonHandler(this);
+
+        validatesaveButton.addActionListener(objButtonHandler);
+
+
+
+
+
+
+
+
+
+
+        cpanel = new JPanel();
+        cpanel.setBackground(new Color(0, 102, 102));
+        GridBagLayout gridbag = new GridBagLayout();
+        cpanel.setLayout(gridbag);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+
+
+
+
+
+        //Add the buttons and the log to the frame
+        Container contentPane = getContentPane();
+
+        contentPane.add(cpanel, BorderLayout.CENTER);
+        javax.swing.GroupLayout mainpanelLayout = new javax.swing.GroupLayout(cpanel);
+        cpanel.setLayout(mainpanelLayout);
+        mainpanelLayout.setHorizontalGroup(
+                mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainpanelLayout.createSequentialGroup()
+                                                                        .addComponent(lblCustomerType, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(cmbCustomerType, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(mainpanelLayout.createSequentialGroup()
+                                                                        .addGap(62, 62, 62)
+                                                                        .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGroup(mainpanelLayout.createSequentialGroup()
+                                                                                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addGap(29, 29, 29)
+                                                                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addGroup(mainpanelLayout.createSequentialGroup()
+                                                                        .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(mainpanelLayout.createSequentialGroup()
+                                                                                        .addGap(62, 62, 62)
+                                                                                        .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                        .addGap(28, 28, 28))
+                                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainpanelLayout.createSequentialGroup()
+                                                                                        .addComponent(lblAddressType, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addGap(18, 18, 18)))
+                                                                        .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                                .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(cmbAddressType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addComponent(txtPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                                .addGap(48, 48, 48)
+                                                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(lblProvince, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(lblZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(txtZipCode, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                                                                        .addComponent(txtProvince)))))
+                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                .addGap(55, 55, 55)
+                                                .addComponent(lblResult, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(37, 37, 37)
+                                                .addComponent(lblResultValue, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                .addGap(278, 278, 278)
+                                                .addComponent(validatesaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(158, Short.MAX_VALUE))
+        );
+        mainpanelLayout.setVerticalGroup(
+                mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                .addGap(63, 63, 63)
+                                                .addComponent(lblPhone))
+                                        .addGroup(mainpanelLayout.createSequentialGroup()
+                                                .addGap(19, 19, 19)
+                                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblAddress)
+                                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblAddressType)
+                                        .addComponent(cmbAddressType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblZipCode)
+                                        .addComponent(txtZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblProvince)
+                                        .addComponent(txtProvince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(35, 35, 35)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblCustomerType)
+                                        .addComponent(cmbCustomerType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(mainpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblResult)
+                                        .addComponent(lblResultValue))
+                                .addGap(31, 31, 31)
+                                .addComponent(validatesaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(116, 116, 116))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(125, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(cpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 179, Short.MAX_VALUE))
+        );
+
+        try {
+            //BCRM.setLookAndFeel(new WindowsLookAndFeel());
+            SwingUtilities.updateComponentTreeUI(
+                    CreateProfile.this);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+
+    }
+    public String getName() {
+        return txtName.getText();
+    }
+    public String getPhone() {
+        return txtPhone.getText();
+    }
+    public String getEmail() {return txtEmail.getText();}
+    public String getAddress() {
+        return txtAddress.getText();
+    }
+    public String getAddressType() { return (String) cmbAddressType.getSelectedItem(); }
+    public String getZipCode() { return txtZipCode.getText(); }
+    public String getProvince() { return txtProvince.getText(); }
+    public String getCustomerType() { return (String) cmbCustomerType.getSelectedItem(); }
+    public void setResultDisplay(String msg) { lblResultValue.setText(msg);}
+
+
+    public static void main(String[] args) {
+        JFrame frame = new CreateProfile();
+        frame.addWindowListener(new WindowAdapter() {
+                                    public void windowClosing(WindowEvent e) {
+                                        System.exit(0);
+                                    }
+                                }
+        );
+
+
+
+
+        //frame.pack();
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
+
+}
+class ButtonHandler implements ActionListener {
+
+    CreateProfile objCreateProfile;
+
+
+
+    public void actionPerformed(ActionEvent e) {
+        String validateCheckResult ;
+
+        if (e.getActionCommand().equals(CreateProfile.EXIT)) {
+            System.exit(1);
+        }
+        if (e.getActionCommand().equals(
+                CreateProfile.VALIDATE_SAVE)){
+            String name = objCreateProfile.getName();
+            String phone= objCreateProfile.getPhone();
+            String email = objCreateProfile.getEmail();
+            String address = objCreateProfile.getAddress();
+            String addresstype = objCreateProfile.getAddressType();
+            String zipcode= objCreateProfile.getZipCode();
+            String province = objCreateProfile.getProvince();
+            String customertype = objCreateProfile.getCustomerType();
+
+            boolean validData = true;
+            String errorMessage = "";
+            boolean result = true;
+
+
+
+
+            Customer ct= new Customer(name,phone,email,address,addresstype,zipcode,province,customertype);
+            if (ct.isValidAddress() == false)  {
+                validData = false;
+                errorMessage = "Invalid Try Again";
+            }
+
+
+
+            if (!validData) {
+                System.out.println(errorMessage);
+                result = false;
+            }else{
+                LoggerFactory factory = new LoggerFactory();
+                Logger logger = factory.getLogger();
+                //Encrypt eLogger= new Encrypt (logger);
+
+                logger.save(ct);
+
+
+
+            }
+
+
+
+
+            if (result) {
+                validateCheckResult =
+                        " Valid Customer Data: Data Saved Successfully ";
+            } else {
+                validateCheckResult =
+                        " Invalid Customer Data: Data Could Not Be Saved ";
+            }
+
+            objCreateProfile.setResultDisplay(
+                    validateCheckResult);
+
+        }
+
+
+
+    }
+
+
+    public ButtonHandler() {
+
+    }
+    public ButtonHandler(CreateProfile inobjCreateProfile) {
+
+        objCreateProfile = inobjCreateProfile;
+
+    }
+
+
+
+
+}
