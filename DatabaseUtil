@@ -1,0 +1,155 @@
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseUtil {
+    // private static final String DB_URL =
+    // "jdbc:sqlite:C:/Users/Yudis/Desktop/FactoryExercise.db";
+    private static final String DB_URL = "jdbc:sqlite:C:\\Users\\Asus\\Desktop\\bcrm.db";
+
+    public DatabaseUtil() {
+        this.initializeLogsTable();
+    }
+
+    private Connection getConnectionToDatabase() {
+        Connection databaseConnection = null;
+
+        try {
+
+            databaseConnection = DriverManager.getConnection(DB_URL);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return databaseConnection;
+    }
+
+    public void insertIntoLogsTable(Customer ct)  {
+
+        try {
+            Connection databaseConnection = this.getConnectionToDatabase();
+            PreparedStatement pstmt = databaseConnection.prepareStatement("INSERT INTO Customerdb (name,phone, email,address,addresstype," +
+                    "zipcode,province,customertype) values(?,?,?,?,?,?,?,?)");
+            pstmt.setString(1,ct.getName());
+            pstmt.setString(2,ct.getPhone());
+            pstmt.setString(3,ct.getEmail());
+            pstmt.setString(4,ct.getAddress());
+            pstmt.setString(5,ct.getAddressType());
+            pstmt.setString(6,ct.getZipCode());
+            pstmt.setString(7,ct.getProvince());
+            pstmt.setString(8,ct.getCustomerType());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void initializeLogsTable() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS Customerdb (\n" + " name PRIMARY KEY,\n" + " phone NOT NULL,\n"
+                + " email NOT NULL,\n" + " address NOT NULL,\n" +" addresstype NOT NULL,\n"
+                +" zipcode NOT NULL,\n" +" province NOT NULL,\n" +" customertype NOT NULL\n" +");";
+
+        try (Connection databaseConnection = this.getConnectionToDatabase(); Statement stmt = databaseConnection.createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public Customer searchontable(String name) {
+        Customer ct=new Customer();
+
+        try{
+            Connection databaseConnection= this.getConnectionToDatabase();
+            PreparedStatement pstmt = databaseConnection.prepareStatement(" SELECT * FROM Customerdb WHERE name=?");
+            pstmt.setString(1,name);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                ct.setName(rs.getString("name"));
+                ct.setPhone(rs.getString("phone"));
+                ct.setEmail(rs.getString("email"));
+                ct.setAddress(rs.getString("address"));
+                ct.setAddressType(rs.getString("addresstype"));
+                ct.setZipCode(rs.getString("zipcode"));
+                ct.setProvince(rs.getString("province"));
+                ct.setCustomerType(rs.getString("customertype"));
+            }databaseConnection.close();
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return ct;
+
+    }
+    public void deleteontable(String name) {
+
+
+        try{
+            Connection databaseConnection= this.getConnectionToDatabase();
+            PreparedStatement pstmt = databaseConnection.prepareStatement(" DELETE FROM Customerdb WHERE name=?");
+            pstmt.setString(1,name);
+            pstmt.executeUpdate();
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
+
+
+    public void updateontable(Customer ct){
+
+
+        try{
+            Connection databaseConnection= this.getConnectionToDatabase();
+            PreparedStatement pstmt=databaseConnection.prepareStatement("UPDATE Customerdb SET name=?,phone=?,email=?,address=?,addresstype=?," +
+                    "zipcode=?,province=?,custometype=? where name=?");
+            pstmt.setString(1,ct.getName());
+            pstmt.setString(2,ct.getPhone());
+            pstmt.setString(3,ct.getEmail());
+            pstmt.setString(4,ct.getAddress());
+            pstmt.setString(5,ct.getAddressType());
+            pstmt.setString(6,ct.getZipCode());
+            pstmt.setString(7,ct.getProvince());
+            pstmt.setString(8,ct.getCustomerType());
+            pstmt.executeUpdate();
+            databaseConnection.close();
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+    public List<Customer> addresstype(){
+        List<Customer> list=new ArrayList<Customer> ();
+        try{
+            Connection databaseConnection= this.getConnectionToDatabase();
+            PreparedStatement pstmt=databaseConnection.prepareStatement("SELECT * FROM Customerdb Where addresstype=?");
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next()){
+                Customer ct = new Customer();
+                ct.setName(rs.getString("name"));
+                ct.setPhone(rs.getString("phone"));
+                ct.setEmail(rs.getString("email"));
+                ct.setAddress(rs.getString("address"));
+                ct.setAddressType(rs.getString("addresstype"));
+                ct.setZipCode(rs.getString("zipcode"));
+                ct.setProvince(rs.getString("province"));
+                ct.setCustomerType(rs.getString("customertype"));
+                list.add(ct);
+
+            }
+            databaseConnection.close();
+        } catch (SQLException e) {
+            e.printStackTrace ( );
+        }return list;
+
+    }
+
+
+
+
+
+}
