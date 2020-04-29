@@ -1,0 +1,115 @@
+public class Customer {
+    // for address type
+    public static final String AO = "Angola";
+   // public static final String CHINA = "China";
+    //type of customer
+    public static final String LO = "Loyal";
+    public static final String  PO= "Potential";
+    public static final String  NW= "New";
+    public static final String  IM= "Impulsive";
+
+    final String customer_file = "customer.txt";
+
+
+
+    //Personal information
+
+    private String name;
+    // private String birthday;
+    private String phone,email;
+    private String address;
+    private String addresstype, zipcode, province;
+    //Especial information
+    private String customertype;
+
+    public Customer() {
+
+
+    }
+
+
+
+
+    public boolean isValidAddress() {
+        //get an appropriate address validator
+        AddressValidator validator = getValidator(addresstype);
+
+        //Polymorphic call to validate the address
+        return validator.isValidAddress(address, zipcode, province);
+
+    }
+
+    public Customer(String cname, String cphone, String cemail, String caddress,
+                    String cat, String czipcode, String cprovince, String ctype) {
+
+
+        name= cname;
+        //birthday=cb;
+        phone=cphone;
+        email=cemail;
+        address= caddress;
+        addresstype= cat;
+        zipcode= czipcode;
+        province= cprovince;
+
+        customertype=ctype;
+
+
+    }
+
+
+
+
+
+
+    private AddressValidator getValidator(String custType) {
+        AddressValidator validator = null;
+
+        if (custType.equals(Customer.AO)) {
+            validator = new AngolaAddressAdapter();
+        }
+
+        /*if (custType.equals(Customer.CHINA)) {
+            validator = new ChinaAddressAdapter();
+        }*/
+        return validator;
+    }
+
+
+    public String getName() { return name; }
+    public void setName(String name) {
+        this.name = name;
+    }
+    //public String getBirthday() {return birthday;}
+    public String getPhone() {return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getAddress() {return address;}
+    public void setAddress(String address) {
+        this.address =address;
+    }
+    public String getAddressType() {return addresstype; }
+    public void setAddressType(String addresstype) {
+        this.addresstype = addresstype;
+    }
+    public String getZipCode() {return zipcode; }
+    public void setZipCode(String zipcode) {
+        this.zipcode= zipcode;
+    }
+    public String getProvince() { return province; }
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCustomerType(){return customertype;}
+    public void setCustomerType(String customertype) { this.customertype = customertype; }
+
+
+
+}
+
+
+
