@@ -1,0 +1,227 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
+
+public class SearchManager extends JFrame {
+    public static final String newline = "\n";
+    public static final String retrieve= "Retrieve";
+    public static final String EXIT = "Exit";
+
+
+
+
+    //private JTextField txtsad;
+    private JComboBox cmbAddressType;
+    private JPanel repanel;
+
+    private JLabel lblResult, lblResultValue;
+
+
+    private JButton retrivebutton;
+
+    //private JTextArea ta;
+    private JTable adtable;
+    private JScrollPane sp1;
+
+
+    public  SearchManager(){
+        super(" Bank Customer management System ");
+        //txtsad = new JTextField(20);
+
+
+        cmbAddressType = new JComboBox();
+        cmbAddressType.addItem(Customer.AO);
+        lblResult = new JLabel("Result:");
+        lblResult.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblResult.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblResultValue=new JLabel ("Choose which country to search ");
+        lblResultValue.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblResultValue.setForeground(new java.awt.Color(255, 255, 255));
+
+        //ta=new JTextArea ();
+        adtable=new JTable();
+        sp1=new JScrollPane ();
+
+        adtable.setModel(new javax.swing.table.DefaultTableModel(
+
+                new Object [][] {},
+                new String [] {
+                        "Name", "Phone", "Email", "Address", "AddressType", "ZipCode", "Province", "CustomerType"
+                }
+        ));
+        sp1.setViewportView(adtable);
+
+
+        retrivebutton=new JButton (SearchManager.retrieve);
+        retrivebutton.setMnemonic(KeyEvent.VK_R);
+        SMhandler objSMhandler = new SMhandler(this);
+        retrivebutton.addActionListener(objSMhandler);
+
+        repanel= new JPanel ();
+        repanel.setBackground(new Color (216, 78, 4));
+        GridBagLayout gridbag = new GridBagLayout();
+        repanel.setLayout(gridbag);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+
+        Container contentPane = getContentPane();
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(repanel);
+        repanel.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(143, 143, 143)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(cmbAddressType, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(retrivebutton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lblResult, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                                .addComponent(lblResultValue, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(112, 112, 112))))
+                        .addComponent(sp1)
+        );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(88, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cmbAddressType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(retrivebutton))
+                                .addGap(81, 81, 81)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblResult)
+                                        .addComponent(lblResultValue))
+                                .addGap(33, 33, 33)
+                                .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(repanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(repanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+
+
+        try {
+            //UIManager.setLookAndFeel(new WindowsLookAndFeel());
+            SwingUtilities.updateComponentTreeUI(
+                    SearchManager.this);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+
+
+
+
+
+    }
+    public String getAddressType() { return (String) cmbAddressType.getSelectedItem(); }
+    public void setResultDisplay(String msg) { lblResultValue.setText(msg);}
+
+
+    public static void main(String[] args) {
+        JFrame frame = new SearchManager ();
+        frame.addWindowListener(new WindowAdapter () {
+                                    public void windowClosing(WindowEvent e) {
+                                        System.exit(0);
+                                    }
+                                }
+        );
+
+
+        frame.pack();
+        frame.setSize(790, 500);
+        frame.setVisible(true);
+    }
+
+
+
+}
+class SMhandler implements ActionListener{
+    SearchManager sobj;
+    private AbstractButton adtable;
+
+
+    public void actionPerformed(ActionEvent e) {
+        String validaterResult ;
+        if (e.getActionCommand().equals(SearchManager.EXIT)) {
+            System.exit(1);
+        }
+        if (e.getActionCommand().equals(
+                SearchManager.retrieve)){
+            String saddresstype=sobj.getAddressType ();
+            boolean validData = true;
+            String errorMessage = "";
+            boolean result = true;
+
+
+            if (!validData) {
+                System.out.println(errorMessage);
+                result = false;
+            }
+            else{
+                String addresstype=saddresstype;
+                LoggerFactory factory = new LoggerFactory();
+                Logger logger = factory.getLogger();
+                List<Customer>list = logger.searchad();
+
+
+                for(Customer ct:list){
+                    String name = ct.getName();
+                    String phone= ct.getPhone();
+                    String email = ct.getEmail();
+                    String address = ct.getAddress();
+                    addresstype = ct.getAddressType ( );
+                    String zipcode= ct.getZipCode();
+                    String province =ct.getProvince();
+                    String customertype = ct.getCustomerType();
+                Object [] row={ name,phone, email, address, addresstype, zipcode,province,customertype};
+                DefaultTableModel model;
+                    model = (DefaultTableModel) adtable.getModel();
+                    model.addRow (row);
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+    }
+
+
+
+
+
+
+
+    public SMhandler(SearchManager inobjs){
+
+        sobj=inobjs;
+    }
+}
