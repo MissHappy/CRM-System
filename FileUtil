@@ -1,0 +1,107 @@
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class FileUtil
+{
+    //private static final String FILE_URL = "C:/Users/Yudis/Desktop/";
+
+    /*
+         Utility method to write a given text to a file
+    */
+    public void writeToFile(String fileName, String dataLine)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy mm:HH:ss");
+        LocalDateTime dateTimeNow = LocalDateTime.now();
+        String dateTimeNowString = dateTimeNow.format(formatter);
+
+        dataLine = dataLine + ", " + dateTimeNowString + "\n";
+
+        try {
+            //File outFile = new File(FILE_URL + fileName);
+            File outFile = new File(fileName);
+            DataOutputStream dos = null;
+            dos = new DataOutputStream(
+                    new FileOutputStream(outFile, true));
+
+            dos.writeBytes(dataLine);
+            dos.close();
+
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return;
+    }
+
+    /*
+          Reads data from a given file
+     */
+    public String readFromFile(String fileName)
+    {
+        String DataLine = "";
+
+        try {
+            //File inFile = new File(FILE_URL + fileName);
+            File inFile = new File(fileName);
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(inFile)));
+
+
+            DataLine = br.readLine();
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+            DataLine = "";
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            DataLine = "";
+        }
+
+        return DataLine;
+
+    }
+
+
+    /*public void Searchonfile(String fileName){
+
+        String line;
+        string dataline;
+
+        try{
+
+            File inFile = new File(fileName);
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(inFile)));
+            while ((line = br.readLine()) != null)
+                if(line.Startwith(sn))
+
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return line;
+
+
+    }*/
+
+
+
+    public boolean deleteFile(String fileName)
+    {
+        File file = new File(fileName);
+        return file.delete();
+    }
+}
+
+
