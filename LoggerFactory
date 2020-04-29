@@ -1,0 +1,37 @@
+import java.io.IOException;
+import java.util.Properties;
+
+public class LoggerFactory {
+
+	private String loggerDriver;
+
+	public LoggerFactory() {
+		Properties p = new Properties();
+
+		try {
+			p.load(ClassLoader.getSystemResourceAsStream("Logger.properties"));
+			String loggerDriverValue = p.getProperty("LOGGER_DRIVER");
+
+			this.loggerDriver = loggerDriverValue.toUpperCase();
+
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+
+	}
+
+	// Factory Method
+	public Logger getLogger() {
+		switch (this.loggerDriver.toUpperCase()) {
+		case "FILE":
+			return new FileLogger();
+		//case "CONSOLE":
+		//	return new ConsoleLogger();
+		case "DB":
+			return  DBLogger.getDBLogger() ;
+		default:
+			return new FileLogger();
+		}
+	}
+
+}
