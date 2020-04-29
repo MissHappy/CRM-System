@@ -1,0 +1,8 @@
+public class AngolaAddressAdapter extends AngolaAddress
+        implements AddressValidator {
+
+    public boolean isValidAddress(String caddress,  String czipcode, String cprovince) {
+
+        return isValidAngolaAddress(caddress, czipcode,cprovince);
+    }
+}// end of class
