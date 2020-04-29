@@ -1,0 +1,68 @@
+import java.util.Collections;
+import java.util.List;
+
+public class DBLogger implements Logger {
+    private DatabaseUtil databaseUtil = null;
+    private static DBLogger logger;
+
+
+    public DBLogger() {
+        this.initDatabaseUtil();
+    }
+
+    public static DBLogger getDBLogger(){
+        if (logger==null){
+            logger=new DBLogger();
+        }
+        return logger;
+    }
+
+    private  synchronized void initDatabaseUtil() {
+        if (this.databaseUtil == null) {
+            this.databaseUtil = new DatabaseUtil();
+        } else {
+            return;
+        }
+    }
+
+
+
+    public synchronized void save(Customer ct) {
+        this.initDatabaseUtil();
+
+        this.databaseUtil.insertIntoLogsTable(ct);
+
+    }
+    public synchronized Customer search(String name){
+
+        this.initDatabaseUtil();
+        Customer ct=this.databaseUtil.searchontable(name);
+
+        return ct;
+    }
+
+
+    public synchronized void update(Customer ct) {
+        this.initDatabaseUtil();
+        this.databaseUtil.updateontable(ct);
+
+
+    }
+
+
+    public synchronized void delete(String name) {
+        this.initDatabaseUtil();
+        this.databaseUtil.deleteontable(name);
+
+    }
+    public synchronized List<Customer> searchad() {
+
+        this.initDatabaseUtil();
+        List<Customer> list = this.databaseUtil.addresstype ( );
+
+
+        return list;
+    }
+
+
+}
