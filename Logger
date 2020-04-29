@@ -1,0 +1,13 @@
+import java.util.List;
+
+public interface Logger {
+
+  public void save(Customer ct);
+  public Customer search(String name);
+  public void update(Customer ct);
+  public void delete(String name);
+  public List<Customer> searchad();
+
+
+
+}
