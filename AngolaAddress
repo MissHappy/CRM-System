@@ -1,0 +1,16 @@
+class AngolaAddress {
+
+    // Zip code- angola does not use this kind of infoemation
+
+    public boolean isValidAngolaAddress(String caddress,String countrycode,String cprovince) {
+
+        if (caddress.trim().length() < 2)
+            return false;
+        if (countrycode.trim().length() <3)
+            return false;
+        if (cprovince.trim().length() <2)
+            return false;
+
+        return true;
+    }
+}// end of class
